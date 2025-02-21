@@ -1,0 +1,17 @@
+@inherits RazorSliceHttpResult<CreateFormViewModel>
+
+<form id="todo-form" hx-post="/todos" hx-target="#todo-list" hx-swap="beforeend" hx-on::after-request="
+  if(event.detail.successful && event.detail.pathInfo.requestPath == '/todos') {
+    document.getElementById('title-error').innerHTML = '';
+    document.getElementById('title').value = '';
+  }">
+  <input type="hidden" name="@Model.AntiForgeryToken.FormFieldName" value="@Model.AntiForgeryToken.RequestToken" />
+
+  @if (Model.Errors.ContainsKey("Title"))
+  {
+    <div id="title-error" class="error">@Model.Errors["Title"]</div>
+  }
+
+  <input type="text" name="title" id="title" placeholder="Add a new todo..." value="@Model.Todo?.Title">
+  <button type="submit">Add</button>
+</form>

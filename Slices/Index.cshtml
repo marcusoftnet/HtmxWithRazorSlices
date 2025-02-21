@@ -1,0 +1,21 @@
+@inherits RazorSliceHttpResult<List<Todo>>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Todo App</title>
+    <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+    <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+    <h1>Todo List</h1>
+    <ul id="todo-list">
+        @foreach (var todo in Model)
+        {
+          @(await RenderPartialAsync<HtmxWithRazorSlices.Slices.TodoItem, Todo>(todo))
+        }
+    </ul>
+    <div id="todo-form" hx-trigger="load" hx-get="/todos/create" hx-swap="innerHtml"></div>
+</body>
+</html>

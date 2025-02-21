@@ -1,0 +1,19 @@
+@inherits RazorSliceHttpResult<Todo>
+
+<li>
+  <input type="checkbox" hx-patch="@($"/todos/{Model.Id}/toggle")" hx-target="closest li" hx-swap="outerHTML" @if
+    (Model.IsCompleted) {
+    <text>checked</text>
+  } />
+
+  <span @if (Model.IsCompleted) {
+  <text>class="completed"</text>
+        }
+    hx-get="@($"/todos/{Model.Id}")"
+    hx-trigger="click"
+    hx-target="this">@Model.Title
+  </span>
+
+  <button hx-delete="@($"/todos/{Model.Id}")" hx-target="closest li" hx-swap="outerHTML">❌
+  </button>
+</li>
